@@ -1,0 +1,43 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - path: src/prepare.py
+      hash: md5
+      md5: bd741fab699e1477a94ca2aff77a7734
+      size: 371
+    outs:
+    - path: data/processed/zameen-updated.csv
+      hash: md5
+      md5: 21d441a28bce4417276097df955afc50
+      size: 2928
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/processed/zameen-updated.csv
+      hash: md5
+      md5: 21d441a28bce4417276097df955afc50
+      size: 2928
+    - path: params.yaml
+      hash: md5
+      md5: d6d1a7883ff6565250461516a862f136
+      size: 103
+    - path: src/train.py
+      hash: md5
+      md5: 438a92bf689ff69545829a901300b28d
+      size: 1036
+    params:
+      params.yaml:
+        split.test_size: 0.2
+        train.n_estimators: 100
+        train.random_state: 42
+    outs:
+    - path: metrics/metrics.json
+      hash: md5
+      md5: 34b0f1a6ca58a4c9e6d9f2e3fc778f84
+      size: 12
+    - path: model/model.pkl
+      hash: md5
+      md5: 6286c431214f4af003aeff316d47aff0
+      size: 68833

@@ -1,0 +1,22 @@
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+      - src/prepare.py
+    outs:
+      - data/processed/zameen-updated.csv
+
+  train:
+    cmd: python src/train.py
+    deps:
+      - data/processed/zameen-updated.csv
+      - src/train.py
+      - params.yaml
+    params:
+      - split.test_size
+      - train.n_estimators
+      - train.random_state
+    outs:
+      - model/model.pkl
+    metrics:
+      - metrics/metrics.json
